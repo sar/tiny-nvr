@@ -80,7 +80,9 @@ ffmpeg -rtsp_transport tcp \
     -y \
     -stimeout 1000000 \
     -i "$streamURL" \
-    -c copy \
+    -c:v copy \
+    -c:a libvorbis \
+    -q:a 6 \
     -f segment \
     -segment_time "$VIDEO_SEGMENT_TIME" \
     -segment_atclocktime 1 \
