@@ -1,0 +1,21 @@
+# ----------------------------------------------------------------
+# Execute runtime: docker-compose
+# Image: ${image_name}:${tag_name}
+# DocSet: https://github.com/sarthakmalik/tiny-nvr (Fork)
+# ----------------------------------------------------------------
+
+version: '3.3'
+services:
+  tinynvr:
+    image: {{image_name}:{image_name}}
+    container_name: {{container_name}}
+    restart: always
+    network_mode: host
+    volumes:
+      - {{host_volume_path}:/usr/data/recordings}
+    command: {{rtsp_stream}}{{rtsp_aslias}}
+    environment:
+      - TZ={{time_zone}}
+      - VIDEO_SEGMENT_TIME={{segment_sec}}
+      - DIR_NAME_FORCE={{dirname_force_boolean}}
+      - HOUSEKEEP_ENABLED={{housekeep_boolean}}
