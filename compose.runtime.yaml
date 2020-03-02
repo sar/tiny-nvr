@@ -11,6 +11,19 @@ services:
     image: streamd:latest
     container_name: user.streamd.video.rtsp0
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 25M
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+        window: 15s
     volumes:
       - /mnt/volume_name/streamd:/usr/data/recordings
     command: rtsp://user:pass@255.255.255.255/feed rtsp0
