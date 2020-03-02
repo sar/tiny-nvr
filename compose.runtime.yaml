@@ -1,0 +1,21 @@
+# ----------------------------------------------------------------
+# execute runtime: docker-compose
+# Image: tiny-nvr
+# DocSet: readme.md
+# Example docker-compose with preferences for runtime containers
+# ----------------------------------------------------------------
+
+version: "3.3"
+services:
+  tinynvr:
+    image: streamd:latest
+    container_name: user.streamd.video.rtsp0
+    restart: always
+    volumes:
+      - /mnt/volume_name/streamd:/usr/data/recordings
+    command: rtsp://user:pass@255.255.255.255/feed rtsp0
+    environment:
+      - "TZ=America/New_York"
+      - VIDEO_SEGMENT_TIME=180
+      - DIR_NAME_FORCE=true
+      - HOUSEKEEP_ENABLED=false
