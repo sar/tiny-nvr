@@ -3,7 +3,7 @@
 # Base: alpine:{ver}
 # ----------------------
 
-FROM alpine:3.12.0
+FROM alpine:3.17
 
 # ----------------------
 # TZ                    : set your timezone, lookup your location in the "tz database"
@@ -24,20 +24,22 @@ ENV TZ=America/New_York \
     VIDEO_SEGMENT_TIME=900 \
     VIDEO_FORMAT=mp4
 
-ENV BASH_VERSION=5.0.17-r0 \
-    TZDATA_VERSION=2020a-r0 \
-    FFMPEG_VERSION=4.3.1-r0
+ENV BASH_VERSION=5.2.15-r0 \
+    TZDATA_VERSION=2023c-r0 \
+    FFMPEG_VERSION=5.1.3-r0
 
 # ----------------------
 # Install/Update: System packages
 # Make: Default data directory
 # ----------------------
-RUN apk update \
+RUN apk update && \
     && apk add bash=$BASH_VERSION tzdata=$TZDATA_VERSION ffmpeg=$FFMPEG_VERSION \
     && rm -rf /var/cache/apk/* \
     && mkdir -p /usr/data/recordings
 
 COPY ./capture.sh /
+
+ENV HTTPS_PROXY=
 
 # ----------------------
 # Declare: Default entrypoint runtime script
