@@ -25,17 +25,19 @@ ENV TZ=America/New_York \
     VIDEO_FORMAT=mp4
 
 ENV BASH_VERSION=5.2.15-r0 \
-    TZDATA_VERSION=2023c-r0 \
-    FFMPEG_VERSION=5.1.3-r0
+    TZDATA_VERSION=2024a-r0 \
+    FFMPEG_VERSION=5.1.4-r0
 
 # ----------------------
 # Install/Update: System packages
 # Make: Default data directory
 # ----------------------
+ARG HTTPS_PROXY
+ENV HTTPS_PROXY=$HTTPS_PROXY
 RUN apk update && \
-    && apk add bash=$BASH_VERSION tzdata=$TZDATA_VERSION ffmpeg=$FFMPEG_VERSION \
-    && rm -rf /var/cache/apk/* \
-    && mkdir -p /usr/data/recordings
+    apk add bash=$BASH_VERSION tzdata=$TZDATA_VERSION ffmpeg=$FFMPEG_VERSION && \
+    rm -rf /var/cache/apk/* && \
+    mkdir -p /usr/data/recordings
 
 COPY ./capture.sh /
 
